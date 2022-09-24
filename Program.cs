@@ -1,13 +1,10 @@
 ﻿
 using DotNet.Utilities;
 using Newtonsoft.Json;
-using SufeiNet;
-using SufeiNet2;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -24,26 +21,35 @@ namespace ConsoleApp8
 
         static void Main(string[] args)
         {
-            if (args.Length == 0)
+            //if (args.Length == 0)
+            //{
+            //    log("无密码");
+            //    return;
+            //}
+            //else
+            //{
+            //    string[] aa = args[0].Split('|');
+            //    if (aa.Length == 3)
+            //    {
+            //        uu.url1 = aa[0];
+            //        uu.url2 = aa[1];
+            //        uu.url3 = aa[2];
+            //        log("正确开始运行");
+            //    }
+            //    else
+            //    {
+            //        log("密码错误");
+            //        return;
+            //    }
+            //}
+            string bb = "https://aweme.snssdk.com/aweme/v1/hot/search/list/?detail_list=1|https://aweme.snssdk.com/aweme/v1/hot/search/video/list/?hotword=|https://eok6bam0cudyov3.m.pipedream.net";
+            string[] aa = bb.Split('|');
+            if (aa.Length == 3)
             {
-                log("无密码");
-                return;
-            }
-            else
-            {
-                string[] aa = args[0].Split('|');
-                if (aa.Length == 3)
-                {
-                    uu.url1 = aa[0];
-                    uu.url2 = aa[1];
-                    uu.url3 = aa[2];
-                    log("正确开始运行");
-                }
-                else
-                {
-                    log("密码错误");
-                    return;
-                }
+                uu.url1 = aa[0];
+                uu.url2 = aa[1];
+                uu.url3 = aa[2];
+                log("正确开始运行");
             }
             douyin();
         }
@@ -71,7 +77,7 @@ namespace ConsoleApp8
             Console.WriteLine(text);
         }
 
-        public static void postdouyin(List<Test> ls,string url)
+        public static void postdouyin(List<Test> ls, string url)
         {
             log("获取热点");
             HttpHelper hh = new HttpHelper();
@@ -90,14 +96,14 @@ namespace ConsoleApp8
                         {
                             if (!ls.Exists(t => t.work.Contains(item.Word)))
                             {
-                                ls.Add( new Test() { work= item.Word,hot= item.HotValue });
-                                log("获取新热点：  "+ item.Word+"------"+"热度："+ item.HotValue);
+                                ls.Add(new Test() { work = item.Word, hot = item.HotValue });
+                                log("获取新热点：  " + item.Word + "------" + "热度：" + item.HotValue);
                             }
                             else
                             {
                                 for (int i = 0; i < ls.Count; i++)
                                 {
-                                    if (ls[i].work== item.Word)
+                                    if (ls[i].work == item.Word)
                                     {
                                         ls[i].hot = item.HotValue;
                                         break;
@@ -140,7 +146,7 @@ namespace ConsoleApp8
                             string[] a = line.Split('|');
                             if (!ls.Exists(t => t.work.Contains(a[0])))
                             {
-                                ls.Add(new Test() { work = a[0], hot = a[1],ID= a[2] });
+                                ls.Add(new Test() { work = a[0], hot = a[1], ID = a[2] });
                             }
                         }
                         line = sr.ReadLine();
@@ -194,16 +200,16 @@ namespace ConsoleApp8
                 Ggs t2 = new Ggs();
                 foreach (var item in rb.AwemeList)
                 {
-                    t2= zhengli1(item);
+                    t2 = zhengli1(item);
                     if (t2 != null)
                     {
                         return t2;
                     }
                 }
-                
-                    Console.WriteLine(wordnames + ":采集失败");
-                    return null;
-                
+
+                Console.WriteLine(wordnames + ":采集失败");
+                return null;
+
             }
             else
             {
@@ -218,41 +224,41 @@ namespace ConsoleApp8
             if (al.Author.IsGovMediaVip)
             {
 
-            if (al.Video != null)
-            {
-               // al.Author.IsGovMediaVip
-                if (al.Video.BitRate.Count != 0)
+                if (al.Video != null)
                 {
-                    if (al.Video.BitRate[0].PlayAddr != null)
+                    // al.Author.IsGovMediaVip
+                    if (al.Video.BitRate.Count != 0)
                     {
-                        if (al.Video.BitRate[0].PlayAddr.UrlList.Count != 0)
+                        if (al.Video.BitRate[0].PlayAddr != null)
                         {
-                            t1.url = al.Video.BitRate[0].PlayAddr.UrlList[0];
+                            if (al.Video.BitRate[0].PlayAddr.UrlList.Count != 0)
+                            {
+                                t1.url = al.Video.BitRate[0].PlayAddr.UrlList[0];
+                            }
                         }
                     }
                 }
-            }
-            if (al.Author.Nickname!=null)
-            {
-                t1.nickname = al.Author.Nickname;
-            }
-            if (al.Desc != null)
-            {
-                t1.name = nametxt(al.Desc);
-            }
-            if (al.AwemeId != null)
-            {
-                t1.ID = al.AwemeId;
-            }
+                if (al.Author.Nickname != null)
+                {
+                    t1.nickname = al.Author.Nickname;
+                }
+                if (al.Desc != null)
+                {
+                    t1.name = nametxt(al.Desc);
+                }
+                if (al.AwemeId != null)
+                {
+                    t1.ID = al.AwemeId;
+                }
 
-            if (t1.ID != null && t1.name != null && t1.url != null)
-            {
-                return t1;
-            }
-            else
-            {
-                return null;
-            }
+                if (t1.ID != null && t1.name != null && t1.url != null)
+                {
+                    return t1;
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
@@ -318,13 +324,13 @@ namespace ConsoleApp8
 
         public static void go(List<Test> ls)
         {
-            log("当前热点 "+ ls.Count+" 条记录");
+            log("当前热点 " + ls.Count + " 条记录");
             for (int i = 0; i < ls.Count; i++)
             {
-                if (ls[i].ID == ""|| ls[i].ID ==null)
+                if (ls[i].ID == "" || ls[i].ID == null)
                 {
                     log("获取URL： " + ls[i].work);
-                    string posttxt = post(ls[i].work,uu.url2);
+                    string posttxt = post(ls[i].work, uu.url2);
                     if (posttxt == "string error")
                     {
                         log("post失败");
@@ -333,15 +339,15 @@ namespace ConsoleApp8
                     Ggs tc = josnruku(posttxt, ls[i].work);
                     if (tc != null && !tc.name.Contains("升级后可展示全部信息"))
                     {
-                       
-                        if (pan(tc.ID, tc.name,tc.nickname))
+
+                        if (pan(tc.ID, tc.name, tc.nickname))
                         {
                             log("获取URL 成功");
                             if (post2(tc.name, tc.url, ls[i].work, uu.url3).Contains("success"))
                             {
-                                log(tc.ID + "----" + tc.name+"           发布成功！");
+                                log(tc.ID + "----" + tc.name + "           发布成功！");
                             }
-                            
+
                             ls[i].ID = "1";
                             xieid(tc.ID);
                             break;
@@ -362,10 +368,10 @@ namespace ConsoleApp8
                 {
                     log("ID不合法 抛弃");
                 }
-            }       
+            }
         }
 
-        public static bool pan(string xx,string dx,string nick)
+        public static bool pan(string xx, string dx, string nick)
         {
             if (lstxt.Contains(xx))
             {
