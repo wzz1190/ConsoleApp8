@@ -355,7 +355,7 @@ namespace ConsoleApp8
                     }
                     else
                     {
-                        ls[i].ID = "0";
+                        ls[i].ID = "";
                     }
                 }
                 else
