@@ -323,7 +323,7 @@ namespace ConsoleApp8
             {
                 if (ls[i].ID == ""|| ls[i].ID ==null)
                 {
-                    log("获取URL： " + ls[i].ID);
+                    log("获取URL： " + ls[i].work);
                     string posttxt = post(ls[i].work,uu.url2);
                     if (posttxt == "string error")
                     {
