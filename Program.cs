@@ -194,7 +194,7 @@ namespace ConsoleApp8
                 Ggs t2 = new Ggs();
                 foreach (var item in rb.AwemeList)
                 {
-                    zhengli1(item);
+                    Ggs t2= zhengli1(item);
                     if (t2 != null)
                     {
                         return t2;
