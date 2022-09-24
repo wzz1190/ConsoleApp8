@@ -191,17 +191,19 @@ namespace ConsoleApp8
             SufeiNet2.SufeiNet_Test3 rb = JsonConvert.DeserializeObject<SufeiNet2.SufeiNet_Test3>(josns);
             if (rb.AwemeList.Count != 0)
             {
-                
-                Ggs t2 = zhengli1(rb.AwemeList[0]);
-                if (t2 != null)
+                Ggs t2 = new Ggs();
+                foreach (var item in rb.AwemeList)
                 {
-                    return t2;
+                    zhengli1(item);
+                    if (t2 != null)
+                    {
+                        return t2;
+                    }
                 }
-                else
-                {
+                
                     Console.WriteLine(wordnames + ":采集失败");
                     return null;
-                }
+                
             }
             else
             {
@@ -213,8 +215,12 @@ namespace ConsoleApp8
         public static Ggs zhengli1(SufeiNet2.AwemeList al)
         {
             Ggs t1 = new Ggs();
+            if (al.Author.IsGovMediaVip)
+            {
+
             if (al.Video != null)
             {
+               // al.Author.IsGovMediaVip
                 if (al.Video.BitRate.Count != 0)
                 {
                     if (al.Video.BitRate[0].PlayAddr != null)
@@ -242,6 +248,11 @@ namespace ConsoleApp8
             if (t1.ID != null && t1.name != null && t1.url != null)
             {
                 return t1;
+            }
+            else
+            {
+                return null;
+            }
             }
             else
             {
