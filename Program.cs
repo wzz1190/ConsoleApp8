@@ -315,6 +315,7 @@ namespace ConsoleApp8
 
         public static void go(List<Test> ls)
         {
+
             log("当前热点 " + ls.Count + " 条记录");
             for (int i = 0; i < ls.Count; i++)
             {
