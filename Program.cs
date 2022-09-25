@@ -212,9 +212,8 @@ namespace ConsoleApp8
         public static Ggs zhengli1(SufeiNet2.AwemeList al)
         {
             Ggs t1 = new Ggs();
-            if (al.Author.IsGovMediaVip)
+            if (al.Author.EnterpriseVerifyReason!="")
             {
-
                 if (al.Video != null)
                 {
                     // al.Author.IsGovMediaVip
