@@ -21,27 +21,9 @@ namespace ConsoleApp8
 
         static void Main(string[] args)
         {
-            if (args.Length == 0)
-            {
-                log("无密码");
-                return;
-            }
-            else
-            {
-                string[] aa = args[0].Split('|');
-                if (aa.Length == 3)
-                {
-                    uu.url1 = aa[0];
-                    uu.url2 = aa[1];
-                    uu.url3 = aa[2];
-                    log("正确开始运行");
-                }
-                else
-                {
-                    log("密码错误");
-                    return;
-                }
-            }
+            uu.url1 = "https://aweme.snssdk.com/aweme/v1/hot/search/list/?detail_list=1";
+            uu.url2 = "https://aweme.snssdk.com/aweme/v1/hot/search/video/list/?hotword=";
+            uu.url3 = "https://eob4vzrz7a48fik.m.pipedream.net";
             douyin();
         }
 
@@ -223,7 +205,18 @@ namespace ConsoleApp8
                         {
                             if (al.Video.BitRate[0].PlayAddr.UrlList.Count != 0)
                             {
-                                t1.url = al.Video.BitRate[0].PlayAddr.UrlList[0];
+                                foreach (var itemss in al.Video.BitRate[0].PlayAddr.UrlList)
+                                {
+                                    if (itemss.Contains("http://v3-dy-o.zjcdn.com/"))
+                                    {
+                                        Console.WriteLine(itemss);
+                                    }
+                                    else
+                                    {
+                                        t1.url = itemss;
+                                    }
+                                }
+                                
                             }
                         }
                     }
